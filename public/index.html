@@ -23,8 +23,34 @@
 
       <div id="err" style="display: none" class="alert alert-danger"></div>
 
-      <h2>Posts</h2>
-      <ul id="posts"></ul>
+      <div class="row">
+        <div class="col-8">
+          <h2>Posts</h2>
+          <ul id="posts"></ul>
+        </div>
+
+        <div class="col-4">
+          <h2>Create Post</h2>
+          <form action="/posts/create" method="POST">
+            <label class="form-group">
+              Author: <input class="form-control" type="text" name="author"
+            /></label>
+
+            <label class="form-group">
+              Text:
+              <textarea
+                rows="10"
+                class="form-control"
+                type="text"
+                name="text"
+              ></textarea>
+            </label>
+
+            <button class="btn btn-primary" type="submit">Create Post</button>
+          </form>
+        </div>
+      </div>
+      <!-- row -->
 
       <footer>Made by John with ❤️</footer>
     </div>

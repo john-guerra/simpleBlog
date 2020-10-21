@@ -1,29 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-const posts = [
-  {
-    text: "l;kjasd;lfkjas;dlkfja;sldkfj;alskdjf ;alksdj f",
-    author: "John",
-    createdAt: new Date(),
-  },
-
-  {
-    text: "l;kjasd;lfkjas;dlkfja;sldkfj;alskdjf ;alksdj f",
-    author: "John1",
-    createdAt: new Date(),
-  },
-  {
-    text: "l;kjasd;lfkjas;dlkfja;sldkfj;alskdjf ;alksdj f",
-    author: "John2",
-    createdAt: new Date(),
-  },
-  {
-    text: "l;kjasd;lfkjas;dlkfja;sldkfj;alskdjf ;alksdj f",
-    author: "John3",
-    createdAt: new Date(),
-  },
-];
+const myDB = require("../db/myMongoDB.js");
 
 router.get("/cgi", (req, res) => {
   const name = "John";
@@ -35,8 +13,25 @@ router.get("/cgi", (req, res) => {
 });
 
 /* GET home page. */
-router.get("/posts", function (req, res, next) {
+router.get("/posts", async (req, res, next) => {
+  const posts = await myDB.getPosts();
   res.json(posts);
+});
+
+router.post("/posts/create", async (req, res) => {
+  const post = req.body;
+
+  console.log("post", post);
+
+  await myDB.createPost(post);
+
+  res.redirect("/");
+});
+
+router.get("/initialize", async (req, res) => {
+  await myDB.initialize();
+
+  res.redirect("/");
 });
 
 module.exports = router;

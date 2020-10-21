@@ -11,6 +11,7 @@ function populatePosts(posts) {
   }
 }
 
+// AJAX
 fetch("/posts")
   .then((res) => res.json())
   .then(populatePosts)
