@@ -25,7 +25,9 @@ router.post("/posts/create", async (req, res) => {
 
   await myDB.createPost(post);
 
-  res.redirect("/");
+  res.status(200).send({ inserted: true });
+
+  // res.redirect("/");
 });
 
 router.get("/initialize", async (req, res) => {
