@@ -7,20 +7,23 @@ function MyDB() {
 
   myDB.getPosts = async () => {
     const client = new MongoClient(uri, { useUnifiedTopology: true });
+    try {
+      await client.connect();
 
-    await client.connect();
+      const db = client.db("posts");
+      const posts = db.collection("posts");
 
-    const db = client.db("posts");
-    const posts = db.collection("posts");
+      const query = {};
 
-    const query = {};
-
-    return posts
-      .find(query)
-      .sort({ _id: -1 })
-      .limit(10)
-      .toArray()
-      .finally(() => client.close());
+      return posts
+        .find(query)
+        .sort({ _id: -1 })
+        .limit(10)
+        .toArray()
+        .finally(() => client.close());
+    } catch (err) {
+      console.log("Error connecting to the database", err);
+    }
   };
 
   myDB.initialize = async () => {
